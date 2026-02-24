@@ -19,3 +19,6 @@ class VisualizationElements:
             'comparison_box': 'orange',
             'text_bg': 'wheat'
         }
+            def create_figure(self, figsize=(12, 8)):
+        self.fig, self.ax = plt.subplots(figsize=figsize)
+        return self.fig, self.ax
