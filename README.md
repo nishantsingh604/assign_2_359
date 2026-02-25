@@ -50,6 +50,13 @@ Algorithm Explanation (closest_pair_algorithms.py)
 7. Each point in the strip is compared to at most the next 7 points.
 8. The final closest pair is selected from left, right, and strip results.
 
+project/
+├── data_generation.py           # Krishna - Point generation and management
+├── closest_pair_algorithms.py    # Dhananjay - Algorithm implementation
+├── visualization_elements.py     # Japneet - Visualization components
+├── main_visualization.py         # Nishant - Pipeline coordination
+├── README.md                     # Documentation with citations
+└── closest_pair_final.png        # Generated output image
 
 Time Complexity Analysis
 
