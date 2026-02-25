@@ -59,3 +59,21 @@ class VisualizationElements:
 
         return strip_left, strip_right
 
+            def draw_pair_connection(self, pair, color, linewidth=2, alpha=0.7):
+        if pair:
+            self.ax.plot([pair[0][0], pair[1][0]],
+                         [pair[0][1], pair[1][1]],
+                         color=color,
+                         linewidth=linewidth,
+                         alpha=alpha)
+
+    def highlight_points(self, points, color, size=150):
+        if points:
+            x_coords = [p[0] for p in points]
+            y_coords = [p[1] for p in points]
+            self.ax.scatter(x_coords, y_coords,
+                            c=color,
+                            s=size,
+                            marker='*',
+                            edgecolors='black')
+
