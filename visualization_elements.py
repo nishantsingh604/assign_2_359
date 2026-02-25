@@ -22,3 +22,13 @@ class VisualizationElements:
             def create_figure(self, figsize=(12, 8)):
         self.fig, self.ax = plt.subplots(figsize=figsize)
         return self.fig, self.ax
+
+            def plot_all_points(self, points):
+        self.ax.scatter(points[:, 0], points[:, 1],
+                        c='blue', s=50, alpha=0.6, label="All Points")
+
+    def plot_half_points(self, points, half_name='left'):
+        color = self.colors['left_half'] if half_name == 'left' else self.colors['right_half']
+        label = "Left Half" if half_name == 'left' else "Right Half"
+        self.ax.scatter(points[:, 0], points[:, 1],
+                        c=color, s=100, alpha=0.3, label=label)
