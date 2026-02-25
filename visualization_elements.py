@@ -77,3 +77,21 @@ class VisualizationElements:
                             marker='*',
                             edgecolors='black')
 
+
+                                def customize_plot(self, title,
+                       xlabel='X coordinate',
+                       ylabel='Y coordinate'):
+        self.ax.set_xlabel(xlabel)
+        self.ax.set_ylabel(ylabel)
+        self.ax.set_title(title)
+        self.ax.legend()
+        self.ax.grid(True)
+        self.ax.set_aspect('equal')
+
+    def save_plot(self, filename='closest_pair_viz.png', dpi=150):
+        plt.tight_layout()
+        self.fig.savefig(filename, dpi=dpi)
+
+    def show_plot(self):
+        plt.show()
+
