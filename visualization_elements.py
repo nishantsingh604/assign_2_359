@@ -31,4 +31,31 @@ class VisualizationElements:
         color = self.colors['left_half'] if half_name == 'left' else self.colors['right_half']
         label = "Left Half" if half_name == 'left' else "Right Half"
         self.ax.scatter(points[:, 0], points[:, 1],
-                        c=color, s=100, alpha=0.3, label=label)
+                       c=color, s=size, alpha=alpha, label=label, zorder=1)
+
+                           def draw_division_line(self, x_coord, linestyle='--', linewidth=2, label='Division line'):
+        self.ax.axvline(x=x_coord,
+                        color=self.colors['division_line'],
+                        linestyle=linestyle,
+                        linewidth=linewidth,
+                        label=label,
+                        zorder=3)
+
+    def draw_delta_boundaries(self, mid_x, delta):
+        strip_left = mid_x - delta
+        strip_right = mid_x + delta
+
+        self.ax.axvline(x=strip_left,
+                        color=self.colors['delta_boundary'],
+                        linestyle=':',
+                        linewidth=1.5,
+                        alpha=0.7)
+
+        self.ax.axvline(x=strip_right,
+                        color=self.colors['delta_boundary'],
+                        linestyle=':',
+                        linewidth=1.5,
+                        alpha=0.7)
+
+        return strip_left, strip_right
+
