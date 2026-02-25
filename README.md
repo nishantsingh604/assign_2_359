@@ -56,7 +56,7 @@ project/
 ├── visualization_elements.py     # Japneet - Visualization components
 ├── main_visualization.py         # Nishant - Pipeline coordination
 ├── README.md                     # Documentation with citations
-└── closest_pair_final.png        # Generated output image
+
 
 Time Complexity Analysis
 
