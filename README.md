@@ -72,11 +72,30 @@ Therefore, the worst-case time complexity of this implementation remains O(n²).
 
 This project demonstrates the strip optimization technique, though it is not the fully recursive O(n log n) divide-and-conquer implementation.
 
+Fixes done:
+ - Fixed the type checking logic - Removed the incorrect check that was causing confusion
+
+ - Added proper null checks throughout to prevent attribute errors
+
+ - Added a _pairs_equal helper method to correctly compare point pairs
+
+ - Used .get() method for dictionary access to prevent KeyError
+
+ - Added boundary checks in _calculate_midline to ensure mid_idx > 0
+
+ - Improved error handling in the main function
+
+ - Added more defensive programming with checks for None values before operations
 
 References
 
-Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. Introduction to Algorithms. MIT Press.
+- Harris, C.R., Millman, K.J., van der Walt, S.J. et al. (2020). "Array programming with NumPy". Nature, 585, 357–362. [Used for NumPy array operations in point data generation and manipulation]
 
-Harris, C. R., et al. (2020). Array programming with NumPy. Nature, 585(7825), 357–362.
+- Cormen, T.H., Leiserson, C.E., Rivest, R.L., & Stein, C. (2009). "Introduction to Algorithms" (3rd ed.). MIT Press. Chapter 33.4: "Finding the closest pair of points" (pp. 1039-1043). [Referenced for the divide-and-conquer algorithm implementation and the strip processing technique visualized in Week 6 Fig 5.7]
 
 Hunter, J. D. (2007). Matplotlib: A 2D graphics environment. Computing in Science & Engineering, 9(3), 90–95.
+
+ AI Tools Used
+This project utilized the following AI tools:
+- GitHub Copilot: Used for code completion and suggestions during development
+- ChatGPT: Used for debugging assistance and code structure discussions

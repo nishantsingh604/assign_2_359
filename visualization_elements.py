@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-from matplotlib.patches import Rectangle, Circle, FancyBboxPatch
+from matplotlib.patches import Rectangle, Circle
 import numpy as np
 
 class VisualizationElements:
@@ -27,19 +27,22 @@ class VisualizationElements:
         return self.fig, self.ax
     
     def plot_all_points(self, points, color='blue', size=50, alpha=0.6, label='All points'):
-        self.ax.scatter(points[:, 0], points[:, 1], 
-                       c=color, s=size, alpha=alpha, label=label, zorder=2)
+        if points is not None and len(points) > 0:
+            self.ax.scatter(points[:, 0], points[:, 1], 
+                           c=color, s=size, alpha=alpha, label=label, zorder=2)
     
     def plot_half_points(self, points, half_name='left', alpha=0.3, size=100):
-        color = self.colors['left_half'] if half_name == 'left' else self.colors['right_half']
-        label = 'Left half' if half_name == 'left' else 'Right half'
-        
-        self.ax.scatter(points[:, 0], points[:, 1], 
-                       c=color, s=size, alpha=alpha, label=label, zorder=1)
+        if points is not None and len(points) > 0:
+            color = self.colors['left_half'] if half_name == 'left' else self.colors['right_half']
+            label = 'Left half' if half_name == 'left' else 'Right half'
+            
+            self.ax.scatter(points[:, 0], points[:, 1], 
+                           c=color, s=size, alpha=alpha, label=label, zorder=1)
     
     def draw_division_line(self, x_coord, linestyle='--', linewidth=2, label='Division line'):
-        self.ax.axvline(x=x_coord, color=self.colors['division_line'], 
-                       linestyle=linestyle, linewidth=linewidth, label=label, zorder=3)
+        if x_coord is not None:
+            self.ax.axvline(x=x_coord, color=self.colors['division_line'], 
+                           linestyle=linestyle, linewidth=linewidth, label=label, zorder=3)
     
     def draw_delta_boundaries(self, mid_x, delta, y_min, y_max):
         strip_left = mid_x - delta
@@ -68,7 +71,7 @@ class VisualizationElements:
     
     def draw_pair_connection(self, pair, color, linewidth=2, alpha=0.7, 
                              linestyle='-', label=None, zorder=4):
-        if pair:
+        if pair is not None and len(pair) == 2:
             self.ax.plot([pair[0][0], pair[1][0]], 
                         [pair[0][1], pair[1][1]], 
                         color=color, linewidth=linewidth, 
@@ -76,15 +79,21 @@ class VisualizationElements:
     
     def highlight_points(self, points, color, size=150, marker='*', 
                          edgecolors='black', linewidth=1, zorder=5):
-        if points:
-            x_coords = [p[0] for p in points]
-            y_coords = [p[1] for p in points]
+        if points is not None:
+            # Handle both single point and pair
+            if isinstance(points, tuple) and len(points) == 2:
+                x_coords = [points[0][0], points[1][0]]
+                y_coords = [points[0][1], points[1][1]]
+            else:
+                x_coords = [p[0] for p in points]
+                y_coords = [p[1] for p in points]
+                
             self.ax.scatter(x_coords, y_coords, 
                           c=color, s=size, marker=marker, 
                           edgecolors=edgecolors, linewidth=linewidth, zorder=zorder)
     
     def draw_comparison_boxes(self, strip_points, delta, frequency=3):
-        if len(strip_points) > 0:
+        if strip_points is not None and len(strip_points) > 0:
             strip_sorted = strip_points[np.argsort(strip_points[:, 1])]
             
             for i, point in enumerate(strip_sorted):
@@ -114,10 +123,11 @@ class VisualizationElements:
                     self.ax.add_patch(circle)
     
     def add_point_labels(self, points, offset=(5, 5), fontsize=8, alpha=0.7):
-        for i, point in enumerate(points):
-            self.ax.annotate(f'P{i}', (point[0], point[1]), 
-                           xytext=offset, textcoords='offset points', 
-                           fontsize=fontsize, alpha=alpha, zorder=6)
+        if points is not None:
+            for i, point in enumerate(points):
+                self.ax.annotate(f'P{i}', (point[0], point[1]), 
+                               xytext=offset, textcoords='offset points', 
+                               fontsize=fontsize, alpha=alpha, zorder=6)
     
     def add_text_box(self, text, position=(0.02, 0.98), fontsize=10):
         props = dict(boxstyle='round', facecolor=self.colors['text_bg'], alpha=0.5)
@@ -139,13 +149,3 @@ class VisualizationElements:
     
     def show_plot(self):
         plt.show()
-
-if __name__ == "__main__":
-    viz_elements = VisualizationElements()
-    viz_elements.create_figure()
-    
-    dummy_points = np.random.rand(20, 2) * 10
-    viz_elements.plot_all_points(dummy_points)
-    viz_elements.add_point_labels(dummy_points[:5])
-    viz_elements.customize_plot("Test Visualization")
-    viz_elements.show_plot()

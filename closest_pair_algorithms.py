@@ -89,22 +89,32 @@ class ClosestPairFinder:
 
         return self.overall_pair, self.overall_dist, cross_case
 
-    def run_full_analysis(self, points):
-        points = np.array(points, dtype=float)
-        if len(points) < 2:
-            self.overall_pair = None
-            self.overall_dist = float("inf")
-            return None, float("inf"), False
-
-        points_sorted = points[np.argsort(points[:, 0])]
-        mid = len(points_sorted) // 2
-        left_half = points_sorted[:mid]
-        right_half = points_sorted[mid:]
-        mid_x = points_sorted[mid][0]
-
+    def run_full_analysis(self, points_sorted, left_half, right_half, mid_x):
+        if self.points is None:
+            self.points = np.vstack((left_half, right_half))
+        
+        self.mid_x = mid_x
+        
         self.find_halves_closest_pairs(left_half, right_half)
+        
         self.calculate_delta()
+        
         self.find_strip_points(points_sorted, mid_x)
+        
         self.find_closest_in_strip()
-
-        return self.determine_overall_closest()
+        
+        overall_pair, overall_dist, cross_case = self.determine_overall_closest()
+        
+        return {
+            'left_dist': self.left_dist,
+            'left_pair': self.left_pair,
+            'right_dist': self.right_dist,
+            'right_pair': self.right_pair,
+            'delta': self.delta,
+            'strip_points': self.strip_points,
+            'strip_dist': self.strip_dist,
+            'strip_pair': self.strip_pair,
+            'overall_dist': overall_dist,
+            'overall_pair': overall_pair,
+            'cross_case': cross_case
+        }

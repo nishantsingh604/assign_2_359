@@ -3,7 +3,6 @@ import random
 
 
 class PointDataGenerator:
-    """Class to handle point generation and basic operations"""
 
     def __init__(self, n_points=30, seed=42):
         self.n_points = n_points
